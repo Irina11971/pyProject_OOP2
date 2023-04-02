@@ -13,7 +13,6 @@ class ConversionTemperature:
                f"Температура по Фаренгейту: {self.temperature_Fahrenheit} \n"
 
 
-
     @staticmethod
     def temperature_Celsius_in_temperature_Fahrenheit(temperature_Celsius: float):
         """
@@ -47,17 +46,17 @@ def execute_application():
         try:
             N = int(input("Введите вариант действия (цифры 1-3): "))
             if N == 1:
-
                 temperature_Celsius = float(input("Введите температуру в градусах Цельсия: "))
                 temperature_Fahrenheit = ConversionTemperature.temperature_Celsius_in_temperature_Fahrenheit(temperature_Celsius)
-                print(temperature_Fahrenheit)
+                print(f"{temperature_Celsius} градус(а/ов) по Цельсию это {temperature_Fahrenheit: 0.2f} градусов по Фаренгейту.")
                 continue
             elif N == 2:
                 temperature_Fahrenheit = float(input("Введите температуру в градусах по Фаренгейту: "))
                 temperature_Celsius = ConversionTemperature.temperature_Fahrenheit_in_temperature_Celsius((temperature_Fahrenheit))
-                print(temperature_Celsius)
+                print(f"{temperature_Fahrenheit} градус(а/ов) по Фаренгейту это {temperature_Celsius: 0.2f} градусов Цельсия.")
                 continue
             elif N == 3:
+                print("Вы вышли из конвертора температур.")
                 break
             else:
                 print(f"Некорректно введен вариант действий. Введите цифру от 1 до 3. \n")
