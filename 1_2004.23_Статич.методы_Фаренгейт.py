@@ -13,7 +13,6 @@ class ConversionTemperature:
                f"Температура по Фаренгейту: {self.temperature_Fahrenheit} \n"
 
 
-
     @staticmethod
     def get_temperature_Celsius_in_temperature_Fahrenheit(temperature_Celsius: float):
         """
