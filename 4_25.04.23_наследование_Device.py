@@ -1,3 +1,5 @@
+from typing import Dict
+
 # Наследование
 
 # Создайте класс Device, который содержит информацию об устройстве.
@@ -6,29 +8,31 @@
 # о блендере).
 
 class Device:
-    def __init__(self, passport_number: str, surname: str, name: str, gender: str, birthdate: Dict[str, str],
-                 birthplace: str, date_of_issue: Dict[str, str], patronymic: str = None):
-        self.__passport_number = passport_number
-        self.__surname = surname
+    def __init__(self, name: str, power: int, voltage: int, colour: str, date_manufacture: Dict[str, str]):
         self.__name = name
-        self.__patronymic = patronymic
-        self.__gender = gender
-        self.__birthdate = birthdate.copy()
-        self.__birthplace = birthplace
-        self.__date_of_issue = date_of_issue.copy()
+        self.__power = power
+        self.__voltage = voltage
+        self.__colour = colour
+        self.__date_manufacture = date_manufacture.copy()
+
+    @property
+    def name(self):
+        return self.__name
 
 
+class CoffeeMachine(Device):
+    def __init__(self, name: str, power: int, voltage: int, colour: str, date_manufacture: Dict[str, str],
+                 pressure: int, number_drinks: int = None):
+        super().__init__(name, power, voltage, colour, date_manufacture)
+        self.__pressure = pressure
+        self.__number_drinks = number_drinks
 
-class International_passport(Passport):
-
-    def __init__(self, passport_number: str, surname: str, name: str, gender: str, birthdate: Dict[str, str], \
-                 birthplace: str, date_of_issue: Dict[str, str], code_of_issuing_State: str, \
-                 date_of_expiry: Dict[str, str], patronymic: str = None):
-        super().__init__(passport_number, surname, name, gender, birthdate, birthplace, date_of_issue, patronymic)
-        self.__code_of_issuing_State = code_of_issuing_State
-        self.__date_of_expiry = date_of_expiry.copy()
-
-
+class Blender(Device):
+    def __init__(self, name: str, power: int, voltage: int, colour: str, date_manufacture: Dict[str, str],
+                 type_blender: str, number_speeds: int = None):
+        super().__init__(name, power, voltage, colour, date_manufacture)
+        self.__type_blender = type_blender
+        self.__number_speeds = number_speeds
 
 def execute_application():
     pass
