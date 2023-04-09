@@ -70,7 +70,7 @@ class Rectangle(Shape):
     def height(self, height):
         self.__height = height
 
-class Circle(Shape)
+class Circle(Shape):
     def __init__(self, x: int, y: int, radius: int):
         super().__init__(x, y)
         self.__radius = radius
