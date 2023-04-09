@@ -37,6 +37,11 @@ class Shape:
     def y(self, y):
         self.__y = y
 
+    def info(self):
+        print(f"Класс: {self.__class__.__name__} \n"
+              f"Координата Х: {self.__x} \n"
+              f"Координата Y: {self.__y}")
+
 
 class Square(Shape):
     def __init__(self, x: int, y: int, width: int):
@@ -49,6 +54,11 @@ class Square(Shape):
     @width.setter
     def width(self, width):
         self.__width = width
+
+    def info(self):
+        super().info()
+        print(f"Длина стороны: {self.__width}")
+
 
 class Rectangle(Shape):
     def __init__(self, x: int, y: int, width: int, height: int):
@@ -70,6 +80,11 @@ class Rectangle(Shape):
     def height(self, height):
         self.__height = height
 
+    def info(self):
+        super().info()
+        print(f"Длина прямоугольника: {self.__width}\n"
+              f"Высота прямоугольника: {self.__height}")
+
 class Circle(Shape):
     def __init__(self, x: int, y: int, radius: int):
         super().__init__(x, y)
@@ -81,6 +96,10 @@ class Circle(Shape):
     @radius.setter
     def radius(self, radius):
         self.__radius = radius
+
+    def info(self):
+        super().info()
+        print(f"Радиус круга: {self.__radius}\n")
 
 class Ellipse(Shape):
     def __init__(self, x: int, y: int, width: int, height: int):
@@ -102,12 +121,30 @@ class Ellipse(Shape):
     def height(self, height):
         self.__height = height
 
-
+    def info(self):
+        super(Ellipse, self).info()
+        print(f"Длина элипса: {self.__width}\n"
+              f"Высота элипса: {self.__height}")
 
 
 
 def execute_application():
-    pass
+
+    square = Square(0, 0, 5)
+    square.info()
+    print()
+
+    rectangle = Rectangle(1, 1, 2, 8)
+    rectangle.info()
+    print()
+
+    circle = Circle(2, 2, 4)
+    circle.info()
+    print()
+
+    ellipse = Ellipse(3, 3, 3, 8)
+    ellipse.info()
+    print()
 
 
 
