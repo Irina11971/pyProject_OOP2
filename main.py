@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 # 9.6 Объектно-ориентированное программирование
 # Абстрактные классы
@@ -17,6 +17,14 @@ from abc import ABC
 # в файлы, загружает из файла и отобразите информацию о каждой из фигур.
 
 
+class ShapeWriteline(ABC): # абстрактный класс для записи информации о формах в файл
+    @abstractmethod
+    def writeline_in_file(self):
+        pass
+class ShapeRead(ABC): # абстрактный класс для чтения информации о формах из файла
+    @abstractmethod
+    def read_data_from_file(self):
+        pass
 
 class Shape:
     def __init__(self, x: int, y: int):
@@ -43,7 +51,7 @@ class Shape:
               f"Координата Y: {self.__y}")
 
 
-class Square(Shape):
+class Square(Shape, ShapeWriteline, ShapeRead):
     def __init__(self, x: int, y: int, width: int):
         super().__init__(x, y)
         self.__width = width
@@ -57,7 +65,8 @@ class Square(Shape):
 
     def info(self):
         super().info()
-        print(f"Длина стороны: {self.__width}")
+        print(f"Длина стороны: {self.__width}\n")
+
 
 
 class Rectangle(Shape):
@@ -83,7 +92,7 @@ class Rectangle(Shape):
     def info(self):
         super().info()
         print(f"Длина прямоугольника: {self.__width}\n"
-              f"Высота прямоугольника: {self.__height}")
+              f"Высота прямоугольника: {self.__height}\n")
 
 class Circle(Shape):
     def __init__(self, x: int, y: int, radius: int):
@@ -122,7 +131,7 @@ class Ellipse(Shape):
         self.__height = height
 
     def info(self):
-        super(Ellipse, self).info()
+        super().info()
         print(f"Длина элипса: {self.__width}\n"
               f"Высота элипса: {self.__height}")
 
@@ -130,21 +139,23 @@ class Ellipse(Shape):
 
 def execute_application():
 
+    ListFigures = []
+
     square = Square(0, 0, 5)
-    square.info()
-    print()
+    ListFigures.append(square)
 
     rectangle = Rectangle(1, 1, 2, 8)
-    rectangle.info()
-    print()
+    ListFigures.append(rectangle)
 
     circle = Circle(2, 2, 4)
-    circle.info()
-    print()
+    ListFigures.append(circle)
 
     ellipse = Ellipse(3, 3, 3, 8)
-    ellipse.info()
-    print()
+    ListFigures.append(ellipse)
+
+    for figures in ListFigures:
+        figures.info()
+        print()
 
 
 
