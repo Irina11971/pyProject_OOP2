@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List, Dict
 
 # 9.6 Объектно-ориентированное программирование
 # Абстрактные классы
@@ -19,11 +20,11 @@ from abc import ABC, abstractmethod
 
 class ShapeWriteline(ABC): # абстрактный класс для записи информации о формах в файл
     @abstractmethod
-    def writeline_in_file(self):
+    def writelines_in_file(self, path: str, ListFigures: list) -> tuple:
         pass
 class ShapeRead(ABC): # абстрактный класс для чтения информации о формах из файла
     @abstractmethod
-    def read_data_from_file(self):
+    def read_data_from_file(self, path: str):
         pass
 
 class Shape:
@@ -51,7 +52,7 @@ class Shape:
               f"Координата Y: {self.__y}")
 
 
-class Square(Shape, ShapeWriteline, ShapeRead):
+class Square(Shape,ShapeWriteline):
     def __init__(self, x: int, y: int, width: int):
         super().__init__(x, y)
         self.__width = width
@@ -67,6 +68,38 @@ class Square(Shape, ShapeWriteline, ShapeRead):
         super().info()
         print(f"Длина стороны: {self.__width}\n")
 
+    # def ShapeRead(path: str):
+    #     """
+    #     Читает данные из файла
+    #     :param path (str): путь к файлу
+    #     :return:
+    #         tuple: кортеж с данными о фигурах
+    #     """
+
+
+        # with open(path, 'a', encoding='UTF-8') as file:
+        #     record = file.readline().rstrip('\n').split(':')
+        #     if record[1] == Square:
+        #         record = file.readline().rstrip('\n').split('\n')
+        #         x = int(record[1])
+        #         record = file.readline().rstrip('\n').split('\n')
+        #         y = int(record[1])
+        #         record = file.readline().rstrip('\n').split('\n')
+        #         width = int(record[1])
+        #         return x, y, width
+
+
+    def writelines_in_file(self, path: str, square: Dict[str, int]):
+        """
+        Добавляет запись в файл
+        :param path (str): путь к файлу
+        :param square (Dict[str, int]): характеристика квадрата
+        :return:
+        """
+
+        with open(path, 'a', encoding='UTF-8') as file:
+            file.writelines(square)
+            print('Файл успешно записан.')
 
 
 class Rectangle(Shape):
@@ -139,23 +172,34 @@ class Ellipse(Shape):
 
 def execute_application():
 
+    # data = Square.ShapeRead('file_Shape.txt')
+    # square = Square(*data)
+    # print(square)
+
+
+
+
     ListFigures = []
 
     square = Square(0, 0, 5)
     ListFigures.append(square)
 
-    rectangle = Rectangle(1, 1, 2, 8)
-    ListFigures.append(rectangle)
+    writelines_in_file('file_Shape.txt', square.info())
 
-    circle = Circle(2, 2, 4)
-    ListFigures.append(circle)
 
-    ellipse = Ellipse(3, 3, 3, 8)
-    ListFigures.append(ellipse)
 
-    for figures in ListFigures:
-        figures.info()
-        print()
+    # rectangle = Rectangle(1, 1, 2, 8)
+    # ListFigures.append(rectangle)
+    #
+    # circle = Circle(2, 2, 4)
+    # ListFigures.append(circle)
+    #
+    # ellipse = Ellipse(3, 3, 3, 8)
+    # ListFigures.append(ellipse)
+    #
+    # for figures in ListFigures:
+    #     figures.info()
+    #     print()
 
 
 
