@@ -10,7 +10,8 @@ from typing import List, Dict
 # верхнего угла и длиной стороны;
 # Rectangle — прямоугольник с заданными координатами верхнего
 # левого угла и размерами;
-# Circle — окружность с заданными координатами цен-тра и радиусом;
+# Circle — окруж
+# ность с заданными координатами цен-тра и радиусом;
 # Ellipse — эллипс с заданными координатами верхнего угла описанного
 # вокруг него прямоугольника со сторонами, параллельными осям координат,
 # и размерами этого прямоугольника.
@@ -18,14 +19,14 @@ from typing import List, Dict
 # в файлы, загружает из файла и отобразите информацию о каждой из фигур.
 
 
-class ShapeWriteline(ABC): # абстрактный класс для записи информации о формах в файл
-    @abstractmethod
-    def writelines_in_file(self, path: str, ListFigures: list) -> tuple:
-        pass
-class ShapeRead(ABC): # абстрактный класс для чтения информации о формах из файла
-    @abstractmethod
-    def read_data_from_file(self, path: str):
-        pass
+# class ShapeWriteline(ABC): # абстрактный класс для записи информации о формах в файл
+#     @abstractmethod
+#     def writelines_in_file(self, path: str) -> tuple:
+#         pass
+# class ShapeRead(ABC): # абстрактный класс для чтения информации о формах из файла
+#     @abstractmethod
+#     def read_data_from_file(self, path: str):
+#         pass
 
 class Shape:
     def __init__(self, x: int, y: int):
@@ -52,7 +53,7 @@ class Shape:
               f"Координата Y: {self.__y}")
 
 
-class Square(Shape,ShapeWriteline):
+class Square(Shape):
     def __init__(self, x: int, y: int, width: int):
         super().__init__(x, y)
         self.__width = width
@@ -68,38 +69,36 @@ class Square(Shape,ShapeWriteline):
         super().info()
         print(f"Длина стороны: {self.__width}\n")
 
-    # def ShapeRead(path: str):
-    #     """
-    #     Читает данные из файла
-    #     :param path (str): путь к файлу
-    #     :return:
-    #         tuple: кортеж с данными о фигурах
-    #     """
-
-
-        # with open(path, 'a', encoding='UTF-8') as file:
-        #     record = file.readline().rstrip('\n').split(':')
-        #     if record[1] == Square:
-        #         record = file.readline().rstrip('\n').split('\n')
-        #         x = int(record[1])
-        #         record = file.readline().rstrip('\n').split('\n')
-        #         y = int(record[1])
-        #         record = file.readline().rstrip('\n').split('\n')
-        #         width = int(record[1])
-        #         return x, y, width
-
-
-    def writelines_in_file(self, path: str, square: Dict[str, int]):
+    @staticmethod
+    def read_data_from_file(path: str):
         """
-        Добавляет запись в файл
-        :param path (str): путь к файлу
-        :param square (Dict[str, int]): характеристика квадрата
+        Читает данные из файла
+        :param path(str): путь к файлу
+
         :return:
+            tuple: кортеж с данными о квадрате
         """
 
-        with open(path, 'a', encoding='UTF-8') as file:
-            file.writelines(square)
-            print('Файл успешно записан.')
+
+        with open(path, 'r', encoding='UTF-8') as file:
+            record = file.readline().rstrip('\n').split(',')
+            x = int(record[0])
+            y = int(record[1])
+            width = int(record[2])
+            return x, y, width
+
+
+    # def writelines_in_file(self, path: str, square: Dict[str, int]):
+    #     """
+    #     Добавляет запись в файл
+    #     :param path (str): путь к файлу
+    #     :param square (Dict[str, int]): характеристика квадрата
+    #     :return:
+    #     """
+    #
+    #     with open(path, 'a', encoding='UTF-8') as file:
+    #         file.writelines(square)
+    #         print('Файл успешно записан.')
 
 
 class Rectangle(Shape):
@@ -172,19 +171,20 @@ class Ellipse(Shape):
 
 def execute_application():
 
-    # data = Square.ShapeRead('file_Shape.txt')
-    # square = Square(*data)
-    # print(square)
+    data = Square.read_data_from_file("data_Square.txt")
+    square = Square(*data)
+    print(square)
 
 
 
 
-    ListFigures = []
 
-    square = Square(0, 0, 5)
-    ListFigures.append(square)
+    # ListFigures = []
+    #
+    # square = Square(0, 0, 5)
+    # ListFigures.append(square)
 
-    writelines_in_file('file_Shape.txt', square.info())
+    #writelines_in_file('file_Shape.txt', square.info())
 
 
 
