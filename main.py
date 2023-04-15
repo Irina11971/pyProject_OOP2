@@ -87,18 +87,18 @@ class Square(Shape):
             width = int(record[2])
             return x, y, width
 
-
-    # def writelines_in_file(self, path: str, square: Dict[str, int]):
-    #     """
-    #     Добавляет запись в файл
-    #     :param path (str): путь к файлу
-    #     :param square (Dict[str, int]): характеристика квадрата
-    #     :return:
-    #     """
-    #
-    #     with open(path, 'a', encoding='UTF-8') as file:
-    #         file.writelines(square)
-    #         print('Файл успешно записан.')
+    @staticmethod
+    def writelines_in_file(path: str, square: Dict[str, int]):
+        """
+        Добавляет запись в файл
+        :param path (str): путь к файлу
+        :param square (Dict[str, int]): характеристика квадрата
+        :return:
+        """
+        text_square = ""
+        with open(path, 'a', encoding='UTF-8') as file:  #?????????????????????????????????????
+            file.writelines(square)
+            print('Файл успешно записан.')
 
 
 class Rectangle(Shape):
@@ -125,6 +125,16 @@ class Rectangle(Shape):
         super().info()
         print(f"Длина прямоугольника: {self.__width}\n"
               f"Высота прямоугольника: {self.__height}\n")
+
+    @classmethod
+    def init_from_filt(cls, path: str):
+        """
+        Cчитывает объекты класса из файла
+
+        :param path (str): адрес сайта
+        :return:
+        """
+
 
 class Circle(Shape):
     def __init__(self, x: int, y: int, radius: int):
@@ -173,8 +183,10 @@ def execute_application():
 
     data = Square.read_data_from_file("data_Square.txt")
     square = Square(*data)
-    print(square)
+    square = square.info()
+    #print(text_square)
 
+    Square.writelines_in_file("file_to_write.txt", square)
 
 
 
@@ -183,10 +195,6 @@ def execute_application():
     #
     # square = Square(0, 0, 5)
     # ListFigures.append(square)
-
-    #writelines_in_file('file_Shape.txt', square.info())
-
-
 
     # rectangle = Rectangle(1, 1, 2, 8)
     # ListFigures.append(rectangle)
