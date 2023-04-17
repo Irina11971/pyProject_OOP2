@@ -1,4 +1,4 @@
-from copy import copy
+
 
 # 9.6 Объектно-ориентированное программирование
 # Миксины
@@ -80,6 +80,7 @@ def execute_application():
 
     engine = DieselEngine()
     car = Car("BMW", 2009, "black")
+    print(car)
     car.get_state(engine)
 
     door = OpenForward()
