@@ -69,7 +69,6 @@ class Square(Shape):
         super().info()
         print(f"Длина стороны: {self.__width}\n")
 
-    @staticmethod
     def read_data_from_file(path: str):
         """
         Читает данные из файла
@@ -87,18 +86,30 @@ class Square(Shape):
             width = int(record[2])
             return x, y, width
 
-    @staticmethod
-    def writelines_in_file(path: str, square: Dict[str, int]):
+
+    def writelines_in_file(self, path: str) -> None:
         """
         Добавляет запись в файл
         :param path (str): путь к файлу
-        :param square (Dict[str, int]): характеристика квадрата
         :return:
         """
         text_square = ""
-        with open(path, 'a', encoding='UTF-8') as file:  #?????????????????????????????????????
-            file.writelines(square)
+        with open(path, 'a', encoding='UTF-8') as file:     #?????????????????????????????????????
+            #file.writelines(self.__class__.__name__ + "\n")
+            # for key, val in self.__dict__.items():
+            #     file.writelines(f"{key} = {val}" +"\n")
             print('Файл успешно записан.')
+
+    # def write_in_file(self, path: str) -> None:
+    #     """
+    #     Записывает данные фигуры в .txt файл
+    #     :param path (str): Путь до файла и название с расширением
+    #     """
+    #     with open(path, "w", encoding="UTF-8") as file:
+    #         file.write(self.__class__.__name__ + "\n")
+    #         for value in self.__dict__.values():
+    #             file.write(str(value) + "\n")
+
 
 
 class Rectangle(Shape):
@@ -184,9 +195,9 @@ def execute_application():
     data = Square.read_data_from_file("data_Square.txt")
     square = Square(*data)
     square = square.info()
-    #print(text_square)
 
-    Square.writelines_in_file("file_to_write.txt", square)
+    #path = 'file_to_write.txt'
+    Square.writelines_in_file('file_to_write.txt')
 
 
 
