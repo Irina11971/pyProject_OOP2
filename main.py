@@ -69,6 +69,7 @@ class Square(Shape):
         super().info()
         print(f"Длина стороны: {self.__width}\n")
 
+    @staticmethod
     def read_data_from_file(path: str):
         """
         Читает данные из файла
@@ -87,6 +88,7 @@ class Square(Shape):
             return x, y, width
 
 
+
     def writelines_in_file(self, path: str) -> None:
         """
         Добавляет запись в файл
@@ -95,9 +97,9 @@ class Square(Shape):
         """
         text_square = ""
         with open(path, 'a', encoding='UTF-8') as file:     #?????????????????????????????????????
-            #file.writelines(self.__class__.__name__ + "\n")
-            # for key, val in self.__dict__.items():
-            #     file.writelines(f"{key} = {val}" +"\n")
+            file.writelines(self.__class__.__name__ + "\n")
+            for key, val in self.__dict__.items():
+                file.writelines(f"{key} = {val}" +"\n")
             print('Файл успешно записан.')
 
     # def write_in_file(self, path: str) -> None:
@@ -193,11 +195,14 @@ class Ellipse(Shape):
 def execute_application():
 
     data = Square.read_data_from_file("data_Square.txt")
-    square = Square(*data)
-    square = square.info()
 
-    #path = 'file_to_write.txt'
-    Square.writelines_in_file('file_to_write.txt')
+    square = Square(*data)
+    print(square.width, square.x, square.y)
+
+
+
+    path = 'file_to_write.txt'
+    square.writelines_in_file('file_to_write.txt')
 
 
 

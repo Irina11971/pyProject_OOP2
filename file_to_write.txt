@@ -1,0 +1,5 @@
+
+Square
+_Shape__x = 0
+_Shape__y = 0
+_Square__width = 5
