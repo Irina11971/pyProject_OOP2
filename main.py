@@ -1,6 +1,3 @@
-from abc import ABC, abstractmethod
-from typing import List, Dict
-
 # 9.6 Объектно-ориентированное программирование
 # Абстрактные классы
 
@@ -19,14 +16,88 @@ from typing import List, Dict
 # в файлы, загружает из файла и отобразите информацию о каждой из фигур.
 
 
-# class ShapeWriteline(ABC): # абстрактный класс для записи информации о формах в файл
-#     @abstractmethod
-#     def writelines_in_file(self, path: str) -> tuple:
-#         pass
-# class ShapeRead(ABC): # абстрактный класс для чтения информации о формах из файла
-#     @abstractmethod
-#     def read_data_from_file(self, path: str):
-#         pass
+class ShapeWriteline: #  класс для записи информации о фигурах в файл
+    def writelines_in_file(self, path: str) -> None:
+        """
+        Добавляет запись о фигуре в файл
+        :param path (str): путь к файлу
+        :return:
+        """
+
+        with open(path, 'a', encoding='UTF-8') as file:
+            file.writelines(self.__class__.__name__ + "\n")
+            for val in self.__dict__.values():
+                file.writelines(str(val) + '\n')
+class ShapeRead: # класс для чтения информации о фигурах из файла
+
+    def square_read_data_from_file(path: str):
+        """
+        Читает данные о квадрате из файла
+        :param path(str): путь к файлу
+
+        :return:
+            tuple: кортеж с данными
+        """
+
+        with open(path, 'r', encoding='UTF-8') as file:
+            record = file.readline().rstrip('\n').split(',')
+            x = int(record[0])
+            y = int(record[1])
+            width = int(record[2])
+            return x, y, width
+
+    def rectangle_read_data_from_file(path: str):
+        """
+        Читает данные о прямоугольнике из файла
+        :param path(str): путь к файлу
+
+        :return:
+            tuple: кортеж с данными
+        """
+
+        with open(path, 'r', encoding='UTF-8') as file:
+            record = file.readline().rstrip('\n').split(',')
+            x = int(record[0])
+            y = int(record[1])
+            width = int(record[2])
+            height = int(record[3])
+            return x, y, width, height
+
+
+    def circle_read_data_from_file(path: str):
+        """
+        Читает данные о круге из файла
+        :param path(str): путь к файлу
+
+        :return:
+            tuple: кортеж с данными
+        """
+
+        with open(path, 'r', encoding='UTF-8') as file:
+            record = file.readline().rstrip('\n').split(',')
+            x = int(record[0])
+            y = int(record[1])
+            radius = int(record[2])
+            return x, y, radius
+
+
+    def ellipse_read_data_from_file(path: str):
+        """
+        Читает данные об элипсе из файла
+        :param path(str): путь к файлу
+
+        :return:
+            tuple: кортеж с данными о фигуре
+        """
+
+        with open(path, 'r', encoding='UTF-8') as file:
+            record = file.readline().rstrip('\n').split(',')
+            x = int(record[0])
+            y = int(record[1])
+            width = int(record[2])
+            height = int(record[3])
+            return x, y, width, height
+
 
 class Shape:
     def __init__(self, x: int, y: int):
@@ -53,7 +124,7 @@ class Shape:
               f"Координата Y: {self.__y}")
 
 
-class Square(Shape):
+class Square(Shape, ShapeRead, ShapeWriteline):
     def __init__(self, x: int, y: int, width: int):
         super().__init__(x, y)
         self.__width = width
@@ -69,50 +140,7 @@ class Square(Shape):
         super().info()
         print(f"Длина стороны: {self.__width}\n")
 
-    def read_data_from_file(path: str):
-        """
-        Читает данные из файла
-        :param path(str): путь к файлу
-
-        :return:
-            tuple: кортеж с данными о квадрате
-        """
-
-
-        with open(path, 'r', encoding='UTF-8') as file:
-            record = file.readline().rstrip('\n').split(',')
-            x = int(record[0])
-            y = int(record[1])
-            width = int(record[2])
-            return x, y, width
-
-
-    def writelines_in_file(self, path: str) -> None:
-        """
-        Добавляет запись в файл
-        :param path (str): путь к файлу
-        :return:
-        """
-        text_square = ""
-        with open(path, 'a', encoding='UTF-8') as file:     #?????????????????????????????????????
-            #file.writelines(self.__class__.__name__ + "\n")
-            # for key, val in self.__dict__.items():
-            #     file.writelines(f"{key} = {val}" +"\n")
-            print('Файл успешно записан.')
-
-    # def write_in_file(self, path: str) -> None:
-    #     """
-    #     Записывает данные фигуры в .txt файл
-    #     :param path (str): Путь до файла и название с расширением
-    #     """
-    #     with open(path, "w", encoding="UTF-8") as file:
-    #         file.write(self.__class__.__name__ + "\n")
-    #         for value in self.__dict__.values():
-    #             file.write(str(value) + "\n")
-
-
-
-class Rectangle(Shape):
+class Rectangle(Shape, ShapeRead, ShapeWriteline):
     def __init__(self, x: int, y: int, width: int, height: int):
         super().__init__(x, y)
         self.__width = width
@@ -137,17 +165,8 @@ class Rectangle(Shape):
         print(f"Длина прямоугольника: {self.__width}\n"
               f"Высота прямоугольника: {self.__height}\n")
 
-    @classmethod
-    def init_from_filt(cls, path: str):
-        """
-        Cчитывает объекты класса из файла
 
-        :param path (str): адрес сайта
-        :return:
-        """
-
-
-class Circle(Shape):
+class Circle(Shape, ShapeRead, ShapeWriteline):
     def __init__(self, x: int, y: int, radius: int):
         super().__init__(x, y)
         self.__radius = radius
@@ -163,7 +182,7 @@ class Circle(Shape):
         super().info()
         print(f"Радиус круга: {self.__radius}\n")
 
-class Ellipse(Shape):
+class Ellipse(Shape, ShapeRead, ShapeWriteline):
     def __init__(self, x: int, y: int, width: int, height: int):
         super().__init__(x, y)
         self.__width = width
@@ -189,37 +208,35 @@ class Ellipse(Shape):
               f"Высота элипса: {self.__height}")
 
 
-
 def execute_application():
 
-    data = Square.read_data_from_file("data_Square.txt")
+    path = 'file_to_write.txt'                                # путь к файлу для записи информации о фигурах
+
+    data = Square.square_read_data_from_file("data_Square.txt")
     square = Square(*data)
-    square = square.info()
+    square.writelines_in_file(path)
 
-    #path = 'file_to_write.txt'
-    Square.writelines_in_file('file_to_write.txt')
+    data = Rectangle.rectangle_read_data_from_file("data_Rectangle.txt")
+    rectangle = Rectangle(*data)
+    rectangle.writelines_in_file(path)
 
 
+    data = Circle.circle_read_data_from_file("data_Circle.txt")
+    circle = Circle(*data)
+    circle.writelines_in_file(path)
 
+    data = Ellipse.ellipse_read_data_from_file("data_Ellipse.txt")
+    ellipse = Ellipse(*data)
+    ellipse.writelines_in_file(path)
 
-    # ListFigures = []
-    #
-    # square = Square(0, 0, 5)
-    # ListFigures.append(square)
-
-    # rectangle = Rectangle(1, 1, 2, 8)
-    # ListFigures.append(rectangle)
-    #
-    # circle = Circle(2, 2, 4)
-    # ListFigures.append(circle)
-    #
-    # ellipse = Ellipse(3, 3, 3, 8)
-    # ListFigures.append(ellipse)
-    #
-    # for figures in ListFigures:
-    #     figures.info()
-    #     print()
-
+    # Выводим информацию о фигурах на консоль
+    ListFigures = []
+    ListFigures.append(square)
+    ListFigures.append(rectangle)
+    ListFigures.append(circle)
+    ListFigures.append(ellipse)
+    for figures in ListFigures:
+        figures.info()
 
 
 
